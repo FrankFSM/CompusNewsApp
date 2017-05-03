@@ -4,6 +4,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 import com.cfxy.compusnewsapp.R;
 import com.cfxy.compusnewsapp.base.BaseFragment;
@@ -24,6 +25,9 @@ public class ContentFragment extends BaseFragment {
     @ViewInject(R.id.vp_content)
     ViewPager vpContent;
 
+    @ViewInject(R.id.rg_group)
+    RadioGroup rgGroup;
+
     private ArrayList<BasePager> mPager;
 
     @Override
@@ -42,6 +46,40 @@ public class ContentFragment extends BaseFragment {
         mPager.add(new SmartPage(mActiviy));
         mPager.add(new SettingPage(mActiviy));
         vpContent.setAdapter(new ContentAdapter());
+        mPager.get(0).initData();
+    }
+
+    @Override
+    public void initListener() {
+        rgGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.br_home:
+                        mPager.get(0).initData();
+                        vpContent.setCurrentItem(0,false);
+                        break;
+                    case R.id.br_newscenter:
+                        mPager.get(1).initData();
+                        vpContent.setCurrentItem(1,false);
+                        break;
+                    case R.id.br_smart:
+                        mPager.get(2).initData();
+                        vpContent.setCurrentItem(2,false);
+                        break;
+                    case R.id.br_gov:
+                        mPager.get(3).initData();
+                        vpContent.setCurrentItem(3,false);
+                        break;
+                    case R.id.br_setting:
+                        mPager.get(4).initData();
+                        vpContent.setCurrentItem(4,false);
+                        break;
+                    default:
+                    break;
+                }
+            }
+        });
     }
 
     class ContentAdapter extends PagerAdapter {
@@ -59,7 +97,6 @@ public class ContentFragment extends BaseFragment {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             BasePager pager = mPager.get(position);
-            pager.initData();
             container.addView(pager.mRootView);
             return pager.mRootView;
         }
@@ -70,5 +107,8 @@ public class ContentFragment extends BaseFragment {
         }
     }
 
+    public NewsPage getNewsPage(){
+        return (NewsPage) mPager.get(1);
+    }
 
 }

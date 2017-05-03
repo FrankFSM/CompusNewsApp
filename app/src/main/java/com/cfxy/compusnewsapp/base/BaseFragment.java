@@ -1,16 +1,11 @@
 package com.cfxy.compusnewsapp.base;
 
 import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.cfxy.compusnewsapp.R;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -32,9 +27,11 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
+        initListener();
     }
 
     public abstract View initView();
     public abstract void initData();
+    public abstract void initListener();
 
 }

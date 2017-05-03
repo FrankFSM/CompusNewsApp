@@ -6,6 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.cfxy.compusnewsapp"
+        useLibrary'org.apache.http.legacy'
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
@@ -26,4 +27,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile files('libs/xUtils-2.6.14.jar')
+    compile files('libs/gson-2.7.jar')
 }
