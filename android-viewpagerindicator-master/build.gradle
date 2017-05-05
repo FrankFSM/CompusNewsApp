@@ -1,12 +1,10 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.cfxy.compusnewsapp"
-        useLibrary'org.apache.http.legacy'
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
@@ -23,10 +21,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile project(':SlidingMenu-master')
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile files('libs/xUtils-2.6.14.jar')
-    compile files('libs/gson-2.7.jar')
-    compile project(':android-viewpagerindicator-master')
 }

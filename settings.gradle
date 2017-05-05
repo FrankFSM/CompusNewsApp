@@ -1,1 +1,1 @@
-include ':app', ':SlidingMenu-master'
+include ':app', ':SlidingMenu-master', ':android-viewpagerindicator-master'

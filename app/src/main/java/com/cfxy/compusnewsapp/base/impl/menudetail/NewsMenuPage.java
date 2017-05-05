@@ -13,6 +13,7 @@ import com.cfxy.compusnewsapp.ui.activity.MainActivity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,8 @@ public class NewsMenuPage extends BaseMenuDetailPage implements ViewPager.OnPage
     private ArrayList<TabDetailPage> tabDetailPages;
     @ViewInject(R.id.vp_news_page)
     ViewPager vpNewsPage;
+    @ViewInject(R.id.indiccator)
+    TabPageIndicator indicator;
 
     public NewsMenuPage(Activity activity, ArrayList<NewsMenuData.NewsTabData> children) {
         super(activity);
@@ -48,7 +51,8 @@ public class NewsMenuPage extends BaseMenuDetailPage implements ViewPager.OnPage
             tabDetailPages.add(tabPage);
         }
         vpNewsPage.setAdapter(new NewSMenuAdapter());
-        vpNewsPage.addOnPageChangeListener(this);
+        indicator.setViewPager(vpNewsPage);
+        indicator.setOnPageChangeListener(this);
     }
 
     @Override
@@ -71,6 +75,11 @@ public class NewsMenuPage extends BaseMenuDetailPage implements ViewPager.OnPage
     }
 
     class NewSMenuAdapter extends PagerAdapter {
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTabList.get(position).title;
+        }
 
         @Override
         public int getCount() {
