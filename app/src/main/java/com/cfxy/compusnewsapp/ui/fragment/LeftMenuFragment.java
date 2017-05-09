@@ -12,6 +12,7 @@ import com.cfxy.compusnewsapp.base.BaseFragment;
 import com.cfxy.compusnewsapp.base.impl.NewsPage;
 import com.cfxy.compusnewsapp.domain.NewsMenuData;
 import com.cfxy.compusnewsapp.ui.activity.MainActivity;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -63,45 +64,52 @@ public class LeftMenuFragment extends BaseFragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = View.inflate(mActiviy,R.layout.list_item_left_menu,null);
+            View view = View.inflate(mActiviy, R.layout.list_item_left_menu, null);
             TextView tv = (TextView) view.findViewById(R.id.tv_item_left_menu);
             tv.setText(data.get(position).title);
-            if(position == currentPos){
+            if (position == currentPos) {
                 tv.setEnabled(true);
-            }else{
+            } else {
                 tv.setEnabled(false);
             }
             return view;
         }
     }
 
-    public void setData(ArrayList<NewsMenuData.NewsData> data){
+    public void setData(ArrayList<NewsMenuData.NewsData> data) {
         this.data = data;
-        menuAdapter = new MenuAdapter();
-        lvLeftMenu.setAdapter(menuAdapter);
-        lvLeftMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                currentPos = position;
-                setCurrentMenuPage();
-                toggle();
-                menuAdapter.notifyDataSetChanged();
+        if (data == null) {
+            MainActivity mUi = (MainActivity) mActiviy;
+            SlidingMenu slidingMenu = mUi.getSlidingMenu();
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        } else {
 
-            }
-        });
-        currentPos = 0;
+            menuAdapter = new MenuAdapter();
+            lvLeftMenu.setAdapter(menuAdapter);
+            lvLeftMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    currentPos = position;
+                    setCurrentMenuPage();
+                    toggle();
+                    menuAdapter.notifyDataSetChanged();
+
+                }
+            });
+            currentPos = 0;
+        }
     }
 
-    private void toggle(){
+    private void toggle() {
         MainActivity mUi = (MainActivity) mActiviy;
         mUi.toggle();
     }
-    protected void setCurrentMenuPage(){
+
+    protected void setCurrentMenuPage() {
         MainActivity mUi = (MainActivity) mActiviy;
-        ContentFragment contentFragment =mUi.getContentFragment();
+        ContentFragment contentFragment = mUi.getContentFragment();
         NewsPage newsPage = contentFragment.getNewsPage();
         newsPage.setCurrentMenuPage(currentPos);
-
 
 
     }

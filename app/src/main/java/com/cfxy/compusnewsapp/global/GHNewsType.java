@@ -5,7 +5,7 @@ package com.cfxy.compusnewsapp.global;
  * Created by ralap on 2017/5/2.
  */
 public enum GHNewsType {
-    top,        //头条，默认
+    top,        //头条
     shehui,     //社会
     guonei,     //国内
     guoji,      //国际

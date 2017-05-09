@@ -42,8 +42,8 @@ public class ContentFragment extends BaseFragment {
         mPager = new ArrayList<>();
         mPager.add(new HomePage(mActiviy));
         mPager.add(new NewsPage(mActiviy));
-        mPager.add(new GovPage(mActiviy));
         mPager.add(new SmartPage(mActiviy));
+        mPager.add(new GovPage(mActiviy));
         mPager.add(new SettingPage(mActiviy));
         vpContent.setAdapter(new ContentAdapter());
         mPager.get(0).initData();
@@ -97,6 +97,9 @@ public class ContentFragment extends BaseFragment {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             BasePager pager = mPager.get(position);
+            if (position!=1){
+                pager.btnMenu.setVisibility(View.GONE);
+            }
             container.addView(pager.mRootView);
             return pager.mRootView;
         }

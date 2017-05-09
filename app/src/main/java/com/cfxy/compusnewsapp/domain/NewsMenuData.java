@@ -16,11 +16,11 @@ public class NewsMenuData {
 		public String id;
 		public String title;
 		public int type;
-		public ArrayList<NewsTabData> children;
+		public ArrayList<NewsTabData> newsTabdataCustoms;
 		
 		@Override
 		public String toString() {
-			return "NewsData [title=" + title + ", children=" + children + "]";
+			return "NewsData [title=" + title + ", children=" + newsTabdataCustoms + "]";
 		}
 	}
 

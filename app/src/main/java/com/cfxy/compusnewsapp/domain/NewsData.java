@@ -14,14 +14,14 @@ public class NewsData {
 	public NewsTab data;
 
 	public class NewsTab {
-		public ArrayList<TopNews> topnews;
-		public ArrayList<News> news;
+		public ArrayList<TopNews> topnewses;
+		public ArrayList<News> newses;
 		public String title;
 		public String more;
 
 		@Override
 		public String toString() {
-			return "NewsTab [topnews=" + topnews + ", news=" + news
+			return "NewsTab [topnews=" + topnewses + ", news=" + newses
 					+ ", title=" + title + "]";
 		}
 

@@ -79,7 +79,7 @@ public class NewsPage extends BasePager {
 
 
         menuDetailPages = new ArrayList<>();
-        menuDetailPages.add(new NewsMenuPage(mActivity,newsMenuData.data.get(0).children));
+        menuDetailPages.add(new NewsMenuPage(mActivity,newsMenuData.data.get(0).newsTabdataCustoms));
         menuDetailPages.add(new TopictMenuPage(mActivity));
         menuDetailPages.add(new PhotosMenuPage(mActivity));
         menuDetailPages.add(new InteractMenuPage(mActivity));

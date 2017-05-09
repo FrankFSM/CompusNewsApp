@@ -3,7 +3,6 @@ package com.cfxy.compusnewsapp.base.impl.menudetail;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.provider.ContactsContract;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +55,7 @@ public class TabDetailPage extends BaseMenuDetailPage {
     private TextView tvTabTitle;
 
     private String mUrl;
-    public  List<NewsData.TopNews> mTopNews;
+    public List<NewsData.TopNews> mTopNews;
     private NewsData data;
     private List<NewsData.News> mNews;
     private NewsAdapter newsAdapter;
@@ -67,7 +65,7 @@ public class TabDetailPage extends BaseMenuDetailPage {
     public TabDetailPage(Activity activity, NewsMenuData.NewsTabData tabData) {
         super(activity);
         this.tabData = tabData;
-        mUrl = Constants.SERVER_URL + tabData.url;
+        mUrl = Constants.SERVER_URL + "/getNews.action?id=" + tabData.id;
     }
 
     @Override
@@ -102,7 +100,7 @@ public class TabDetailPage extends BaseMenuDetailPage {
                 tvTitle = (TextView) view.findViewById(R.id.tv_title);
                 tvTitle.setTextColor(Color.GRAY);
                 Intent intent = new Intent(mActivity, NewsDetailActivity.class);
-                intent.putExtra("url",mNews.get(position).url);
+                intent.putExtra("url", mNews.get(position).url);
                 mActivity.startActivity(intent);
             }
         });
@@ -131,7 +129,7 @@ public class TabDetailPage extends BaseMenuDetailPage {
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String result = responseInfo.result;
                 CacheUtil.setCache(mUrl, result, mActivity);
-                processResult(result,false);
+                processResult(result, false);
                 lvTab.onRefreshComplete(true);
             }
 
@@ -143,10 +141,10 @@ public class TabDetailPage extends BaseMenuDetailPage {
         });
     }
 
-    private void processResult(String result,boolean isLoadMore) {
+    private void processResult(String result, boolean isLoadMore) {
         Gson gson = new Gson();
         data = gson.fromJson(result, NewsData.class);
-        mTopNews = data.data.topnews;
+        mTopNews = data.data.topnewses;
 
 
         if (!TextUtils.isEmpty(data.data.more)) {
@@ -155,7 +153,7 @@ public class TabDetailPage extends BaseMenuDetailPage {
             moreUrl = null;
         }
         if (!isLoadMore) {
-            mNews = data.data.news;
+            mNews = data.data.newses;
             if (mTopNews != null) {
                 topPageDetailAdapter = new TopPageDetailAdapter();
                 vpTab.setAdapter(topPageDetailAdapter);
@@ -188,8 +186,8 @@ public class TabDetailPage extends BaseMenuDetailPage {
                 newsAdapter = new NewsAdapter();
                 lvTab.setAdapter(newsAdapter);
             }
-        }else{
-            ArrayList<NewsData.News> news = data.data.news;
+        } else {
+            ArrayList<NewsData.News> news = data.data.newses;
             mNews.addAll(news);
             newsAdapter.notifyDataSetChanged();
         }
@@ -204,7 +202,7 @@ public class TabDetailPage extends BaseMenuDetailPage {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 String moreResult = responseInfo.result;
-                processResult(moreResult,true);
+                processResult(moreResult, true);
                 // 收起加载更多布局
                 lvTab.onRefreshComplete(true);
             }
@@ -259,7 +257,7 @@ public class TabDetailPage extends BaseMenuDetailPage {
             NewsData.News news = getItem(position);
             viewHolder.tvDate.setText(news.pubdate);
             viewHolder.tvTitle.setText(news.title);
-            bitmapUtils.display(viewHolder.ivIcon, news.listimage);
+            bitmapUtils.display(viewHolder.ivIcon, Constants.SERVER_URL + news.listimage);
             return convertView;
         }
     }
@@ -291,7 +289,7 @@ public class TabDetailPage extends BaseMenuDetailPage {
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = new ImageView(mActivity);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            mBitmapUtils.display(imageView, mTopNews.get(position).topimage);
+            mBitmapUtils.display(imageView, Constants.SERVER_URL + mTopNews.get(position).topimage);
             container.addView(imageView);
             return imageView;
         }

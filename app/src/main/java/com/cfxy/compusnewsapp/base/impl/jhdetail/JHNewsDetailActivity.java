@@ -1,4 +1,4 @@
-package com.cfxy.compusnewsapp.base.impl.detail;
+package com.cfxy.compusnewsapp.base.impl.jhdetail;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,7 +19,7 @@ import com.cfxy.compusnewsapp.global.Constants;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-public class NewsDetailActivity extends Activity implements View.OnClickListener {
+public class JHNewsDetailActivity extends Activity implements View.OnClickListener {
 
     @ViewInject(R.id.tv_title)
     private TextView tvTitle;
@@ -45,7 +45,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
-        url = Constants.SERVER_URL + getIntent().getStringExtra("url");
+        url = getIntent().getStringExtra("url");
         ViewUtils.inject(this);
         initView();
         initListener();
@@ -80,6 +80,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
                 pbLoading.setVisibility(View.GONE);
             }
         });
+
         webView.loadUrl(url);
     }
 
@@ -96,6 +97,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
                 finish();
                 break;
             case R.id.btn_textsize:
+                System.out.println("123");
                 showChooseDialog();
                 break;
 //            case R.id.btn_share:

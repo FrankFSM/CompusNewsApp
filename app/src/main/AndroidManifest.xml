@@ -24,6 +24,9 @@
             android:theme="@style/Theme.PageIndicatorDefaults" />
         <activity android:name=".base.impl.detail.NewsDetailActivity"
             android:theme="@android:style/Theme.NoTitleBar"></activity>
+
+        <activity android:name=".base.impl.jhdetail.JHNewsDetailActivity"
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
     </application>
 
 </manifest>
